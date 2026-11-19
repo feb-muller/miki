@@ -7,7 +7,10 @@ authors = [
     { name = "Fred Miller", email = "fredmiller08@gmail.com" }
 ]
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+    "html2text>=2025.4.15",
+    "wikitextparser>=3.0.0",
+]
 
 [project.scripts]
 meshiki = "meshiki:main"
