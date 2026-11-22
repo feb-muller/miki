@@ -9,23 +9,29 @@ INDEX_REQ = 4
 INDEX_RES = 5
 
 
+class Send_Page_Res: #generates packets to be send back to client
+    def __init__(self):
+        self.packet_gen = PacketHandler()
+
+    def req_packet(self):
+        title = input("What Page are you looking for: ") #This is replaced with a user message over meshcore
+        packet_list = self.packet_gen.page_res_handler(PAGE_RES, title)
+        return packet_list
+
+
 class Send_Page_Req:
     def __init__(self):
-        self.packet_gen = PacketHandler()
-
-    def req_packet(self):
-        title = input("What Page are you looking for: ")
-        packet = self.packet_gen.page_req_handler(PAGE_REQ, title)
-        return packet
+        pass
+    #function here to format a packet that has title and routing stuff in it
 
 
-class Send_Index_Req:
+class Decoder:
     def __init__(self):
         self.packet_gen = PacketHandler()
 
-    def req_packet(self):
-        #packet = self.packet_gen.index_req_handler(INDEX_REQ, user)
-        print("WIP")
+    def decode_packets(self, packet_list):
+        decoded_list = self.packet_gen.decode_packets(packet_list)
+        return decoded_list
 
 
 def main():
@@ -35,12 +41,23 @@ def main():
                         "1- Wiki Page\n" \
                         "2- Index Page\n"))
     if request == 1:
-        packet = Send_Page_Req().req_packet()
+        packet_list = Send_Page_Res().req_packet() #this is acting as if someone has responded with the packets
+        #This would be where index seraching is done and its send over mesh
+        #what gets send back to you is this packet_list for you to decode
+        
+        for i in range(len(packet_list)):
+            print(packet_list[i]) #in for loop send each part of list this is the bytes and compressed wiki text
+
+        decoded = Decoder().decode_packets(packet_list)
+        print(decoded)
+
     elif request == 2:
-        packet = Send_Index_Req.req_packet()
+        #packet = Send_Index_Req.req_packet()
+        print("Nothing Yet")
         #Maybe this is automated with a page_req message then a cache or file of users indexes are stored from who you have requested from 
 
-    print(packet)
+
+
 
 
 main()
