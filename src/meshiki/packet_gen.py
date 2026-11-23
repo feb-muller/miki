@@ -54,9 +54,9 @@ class PacketHandler:
             if msg_type == PAGE_RES:
                 page_res_payloads.append(working_packet[6:])
 
-        joined_payloads = b''.join(page_res_payloads)
+        joined_payloads = b''.join(page_res_payloads) #clear after use? do objects in classes do this for me?
         decoded_payload = bz2.decompress(joined_payloads) #This bit should only apply to decoding page response
-        print(decoded_payload)
+        return decoded_payload
 
 
     #Wiki Page request handler returns list of packets
@@ -77,6 +77,11 @@ class PacketHandler:
         packet = self.encode_packet(msg_type, 1, 1, 1)
 
         return packet_list
+
+    def page_req_handler(self, msg_type, title):
+        title_bytes = title.encode("utf-8")
+        packet = self.encode_packet(msg_type, 1, 1, 1) + title_bytes
+        return packet
 
 
     #index page request handler

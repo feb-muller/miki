@@ -9,6 +9,7 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "html2text>=2025.4.15",
+    "meshcore>=2.3.19",
     "wikitextparser>=3.0.0",
 ]
 
